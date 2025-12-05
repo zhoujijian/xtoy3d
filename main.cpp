@@ -34,7 +34,7 @@ bool dragging = false;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
-ModelNode* CreateModelPlain(Shader& shader) {
+ModelNode* CreateModelPlain(Shader& shader, glm::vec3 color) {
     float x1 = -1.0f, x2 = 1.0f;
     float y1 = -1.0f, y2 = 1.0f;
     float z1 = -1.0f, z2 = 1.0f;
@@ -48,12 +48,15 @@ ModelNode* CreateModelPlain(Shader& shader) {
     vertex3.Position = glm::vec3(x1, 0.0f, z2);
     vector<Vertex> vertices = { vertex0, vertex1, vertex2, vertex3 };
     vector<unsigned int> indices = { 0, 1, 2, 2, 3, 0 };
-    vector<Mesh> meshes = { Mesh(vertices, indices, {}) };
+    Mesh mesh(vertices, indices, {});
+    mesh.color = color;
+    vector<Mesh> meshes;
+    meshes.push_back(mesh);
     ModelNode* plain = new ModelNode(shader, meshes);
     return plain;
 }
 
-ModelNode* CreateModelCube(Shader& shader) {
+ModelNode* CreateModelCube(Shader& shader, glm::vec3 color) {
     float x1 = -1.0f, x2 = 1.0f;
     float y1 = -1.0f, y2 = 1.0f;
     float z1 = -1.0f, z2 = 1.0f;
@@ -75,7 +78,10 @@ ModelNode* CreateModelCube(Shader& shader) {
         6, 2, 7, 7, 2, 3, // top,
         5, 1, 4, 4, 1, 0  // bottom
     };
-    vector<Mesh> meshes = { Mesh(vertices, indices, {}) };
+    Mesh mesh(vertices, indices, {});
+    mesh.color = color;
+    vector<Mesh> meshes;
+    meshes.push_back(mesh);
     ModelNode* plain = new ModelNode(shader, meshes);
     return plain;
 }
@@ -140,12 +146,14 @@ int main()
 
     // ModelNode* backpack = CreateModelBackpack();
     // root.AddChild(backpack);
-    
-    // ModelNode* plain = CreateModelPlain(ourShader);
-    // root.AddChild(plain);
 
     Shader shader("resources/simple.vs", "resources/simple.fs");
-    ModelNode* cube = CreateModelCube(shader);
+
+    ModelNode* plain = CreateModelPlain(shader, glm::vec3(1.0f, 1.0f, 1.0f));
+    plain->SetPosition(glm::vec3(0.0f, -1.0f, 0.0f));
+    root.AddChild(plain);
+
+    ModelNode* cube = CreateModelCube(shader, glm::vec3(0.0f, 1.0f, 1.0f));
     cube->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
     cube->SetPosition(glm::vec3(1.0f, 0.0f, -1.0f));
     root.AddChild(cube);

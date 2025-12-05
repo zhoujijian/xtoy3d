@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>E:\Work\toy3d\3rd\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Work\toy3d\3rd\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Work\code\xtoy3d\3rd\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Work\code\xtoy3d\3rd\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
