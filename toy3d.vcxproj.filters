@@ -59,6 +59,9 @@
     <ClInclude Include="include\camera_node.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="include\toy3d.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\1.model_loading.fs">

@@ -151,6 +151,7 @@
     <ClInclude Include="include\light_node.h" />
     <ClInclude Include="include\model_node.h" />
     <ClInclude Include="include\node.h" />
+    <ClInclude Include="include\toy3d.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\1.model_loading.fs" />
