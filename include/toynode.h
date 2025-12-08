@@ -5,14 +5,25 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <vector>
+#include <toy3d.h>
 
 using namespace std;
+
+struct ToyNodeType {
+	enum List {
+		Empty = 0,
+		Light,
+		Model,
+		Mesh,
+		Camera
+	};
+};
 
 class ToyNode {
 public:
 	ToyNode();
 
-public:
+public:	
 	glm::vec3 GetPosition() const { return position; }
 	glm::vec3 GetRotation() const { return rotation; }
 	glm::vec3 GetScale() const { return scale; }
@@ -21,12 +32,14 @@ public:
 	void SetScale(glm::vec3 scale) { this->scale = scale; }
 	glm::mat4 GetTransform() const;
 	vector<ToyNode*> GetChildren() const { return children; }
+	ToyNodeType::List GetNodeType() const { return type; }
 
 public:
 	void AddChild(ToyNode* node);
-	virtual void Draw();
+	virtual void Draw(const RenderContext& context);
 
 protected:
+	ToyNodeType::List type;
 	ToyNode* parent;
 	vector<ToyNode*> children;
 

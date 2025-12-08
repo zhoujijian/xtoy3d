@@ -137,25 +137,28 @@
   <ItemGroup>
     <ClCompile Include="camera_node.cpp" />
     <ClCompile Include="glad.c" />
-    <ClCompile Include="include\learnopengl\stb_image_impl.cpp" />
     <ClCompile Include="light_node.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mesh_node.cpp" />
     <ClCompile Include="model_node.cpp" />
-    <ClCompile Include="node.cpp" />
+    <ClCompile Include="toynode.cpp" />
+    <ClCompile Include="stb_image_impl.cpp" />
+    <ClCompile Include="toy3d.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\camera.h" />
     <ClInclude Include="include\camera_node.h" />
-    <ClInclude Include="include\learnopengl\camera.h" />
-    <ClInclude Include="include\learnopengl\mesh.h" />
-    <ClInclude Include="include\learnopengl\shader.h" />
     <ClInclude Include="include\light_node.h" />
+    <ClInclude Include="include\mesh.h" />
+    <ClInclude Include="include\mesh_node.h" />
     <ClInclude Include="include\model_node.h" />
-    <ClInclude Include="include\node.h" />
+    <ClInclude Include="include\toynode.h" />
+    <ClInclude Include="include\shader.h" />
     <ClInclude Include="include\toy3d.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\1.model_loading.fs" />
-    <None Include="resources\1.model_loading.vs" />
+    <None Include="resources\model.fs" />
+    <None Include="resources\model.vs" />
     <None Include="resources\simple.fs" />
     <None Include="resources\simple.vs" />
   </ItemGroup>

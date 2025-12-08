@@ -1,7 +1,6 @@
-#include <node.h>
+#include <toynode.h>
 
-ToyNode::ToyNode() {
-	parent = nullptr;
+ToyNode::ToyNode() : parent(nullptr), type(ToyNodeType::Empty) {
 	position = glm::vec3(0.0f, 0.0f, 0.0f);
 	rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 	scale = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -11,9 +10,9 @@ void ToyNode::AddChild(ToyNode* node) {
 	children.push_back(node);
 }
 
-void ToyNode::Draw() {
+void ToyNode::Draw(const RenderContext& context) {
 	for (auto it = children.begin(); it != children.end(); ++it) {
-		(*it)->Draw();
+		(*it)->Draw(context);
 	}
 }
 

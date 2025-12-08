@@ -6,9 +6,9 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include <learnopengl/mesh.h>
-#include <learnopengl/shader.h>
-#include <node.h>
+#include <mesh.h>
+#include <shader.h>
+#include <toynode.h>
 
 #include <vector>
 using namespace std;
@@ -22,7 +22,7 @@ public:
     ModelNode(Shader& shader, string const& path, bool gamma = false);
 
 public:
-    void Draw() override;
+    void Draw(const RenderContext& context) override;
 
 private:
     void loadModel(string const& path);

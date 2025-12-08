@@ -6,9 +6,13 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <stb_image.h>
 
-#include <learnopengl/shader.h>
-#include <learnopengl/camera.h>
+#include <shader.h>
+#include <camera.h>
 #include <model_node.h>
+#include <mesh.h>
+#include <mesh_node.h>
+#include <light_node.h>
+#include <toy3d.h>
 
 #include <iostream>
 
@@ -33,6 +37,33 @@ bool dragging = false;
 // timing
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
+
+SimpleMeshNode* CreatePlainMesh(const Shader& shader, glm::vec3 color) {
+    Material material(shader);
+
+	float x1 = -1.0f, x2 = 1.0f;
+	float y1 = -1.0f, y2 = 1.0f;
+	float z1 = -1.0f, z2 = 1.0f;
+	SimpleVertex vertex0;
+	SimpleVertex vertex1;
+	SimpleVertex vertex2;
+	SimpleVertex vertex3;
+	vertex0.Position = glm::vec3(x1, 0.0f, z1);
+	vertex1.Position = glm::vec3(x2, 0.0f, z1);
+	vertex2.Position = glm::vec3(x2, 0.0f, z2);
+	vertex3.Position = glm::vec3(x1, 0.0f, z2);
+    vector<SimpleVertex> vertices = { vertex0, vertex3, vertex1, vertex1, vertex3, vertex2 };
+    
+	SimpleMeshNode* plain = new SimpleMeshNode(vertices, material, color);
+	return plain;
+}
+
+SimpleMeshNode* CreateCubeMesh(const Shader& shader, glm::vec3 color) {
+    vector<SimpleVertex> vertices = CreateCubeVertices();
+    Material material(shader);
+    SimpleMeshNode* cube = new SimpleMeshNode(vertices, material, color);
+    return cube;
+}
 
 ModelNode* CreateModelPlain(Shader& shader, glm::vec3 color) {
     float x1 = -1.0f, x2 = 1.0f;
@@ -73,9 +104,9 @@ ModelNode* CreateModelCube(Shader& shader, glm::vec3 color) {
     vector<unsigned int> indices = {
         0, 3, 1, 1, 3, 2, // back
         5, 6, 4, 4, 6, 7, // front
-        4, 7, 0, 0, 7, 3, // left        
+        4, 7, 0, 0, 7, 3, // left
         1, 2, 5, 5, 2, 6, // right
-        6, 2, 7, 7, 2, 3, // top,
+        6, 2, 7, 7, 2, 3, // top
         5, 1, 4, 4, 1, 0  // bottom
     };
     Mesh mesh(vertices, indices, {});
@@ -147,15 +178,45 @@ int main()
     // ModelNode* backpack = CreateModelBackpack();
     // root.AddChild(backpack);
 
-    Shader shader("resources/simple.vs", "resources/simple.fs");
+    ToyLight lightConfDir;
+    lightConfDir.type = LightType::Direction;
+    lightConfDir.dir.direction = glm::vec3(-1.0f, -1.0f, 0.5f);
+    lightConfDir.dir.ambient = glm::vec3(1.0f, 1.0f, 1.0f);
+    lightConfDir.dir.diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
+    lightConfDir.dir.specular = glm::vec3(1.0f, 1.0f, 1.0f);
+    // LightNode* lightNodeDir = new LightNode(lightConfDir);
+    // root.AddChild(lightNodeDir);
 
-    ModelNode* plain = CreateModelPlain(shader, glm::vec3(0.5f, 0.5f, 0.5f));
+    ToyLight lightConfPoint;
+    lightConfPoint.type = LightType::Point;
+    lightConfPoint.point.ambient = glm::vec3(1.0f, 1.0f, 1.0f);
+    lightConfPoint.point.diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
+    lightConfPoint.point.specular = glm::vec3(1.0f, 1.0f, 1.0f);
+    lightConfPoint.point.constant = 1.0f;
+    lightConfPoint.point.linear = 0.7f;
+    lightConfPoint.point.quadratic = 1.8f;
+    LightNode* lightNodePoint = new LightNode(lightConfPoint);
+    lightNodePoint->color = glm::vec3(1.0f, 1.0f, 1.0f);
+    lightNodePoint->SetPosition(glm::vec3(1.0f, 2.0f, -1.0f));
+    lightNodePoint->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+    root.AddChild(lightNodePoint);
+
+    Shader shader("resources/simple.vs", "resources/simple.fs");
+    SimpleMeshNode* plain = CreatePlainMesh(shader, glm::vec3(1.0f, 1.0f, 0.0f));
     root.AddChild(plain);
 
-    ModelNode* cube = CreateModelCube(shader, glm::vec3(0.0f, 1.0f, 1.0f));
-    cube->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
-    cube->SetPosition(glm::vec3(0.0f, 0.5f, -1.0f));
+    // ModelNode* plain = CreateModelPlain(shader, glm::vec3(0.5f, 0.5f, 0.5f));
+    // root.AddChild(plain);
+
+    SimpleMeshNode* cube = CreateCubeMesh(shader, glm::vec3(0.0f, 1.0f, 1.0f));
+    cube->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
+    cube->SetPosition(glm::vec3(0.0f, 1.0f, -1.0f));
     root.AddChild(cube);
+
+    // ModelNode* cube = CreateModelCube(shader, glm::vec3(0.0f, 1.0f, 1.0f));
+    // cube->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+    // cube->SetPosition(glm::vec3(0.0f, 0.5f, -1.0f));
+    // root.AddChild(cube);
 
     // draw in wireframe
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -179,15 +240,11 @@ int main()
 
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
-
+        RenderContext context(projection, view);
         vector<ToyNode*> children = root.GetChildren();
+
         for (auto it = children.begin(); it != children.end(); ++it) {
-            ModelNode* model = static_cast<ModelNode*>(*it);
-            model->shader.use();
-            model->shader.setMat4("projection", projection);
-            model->shader.setMat4("view", view);
-            model->shader.setMat4("model", model->GetTransform());
-            model->Draw();
+            (*it)->Draw(context);
         }
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

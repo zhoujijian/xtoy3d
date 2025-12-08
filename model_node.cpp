@@ -6,8 +6,8 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include <learnopengl/mesh.h>
-#include <learnopengl/shader.h>
+#include <mesh.h>
+#include <shader.h>
 #include <model_node.h>
 #include <toy3d.h>
 
@@ -19,15 +19,19 @@
 using namespace std;
 
 ModelNode::ModelNode(Shader& shader, vector<Mesh>& meshes)
-    : shader(shader), meshes(meshes), gammaCorrection(false) { }
+    : shader(shader), meshes(meshes), gammaCorrection(false)
+{
+    type = ToyNodeType::Model;
+}
 
 ModelNode::ModelNode(Shader& shader, string const& path, bool gamma)
     : shader(shader), gammaCorrection(gamma)
 {
+    type = ToyNodeType::Model;
     loadModel(path);
 }
 
-void ModelNode::Draw() {
+void ModelNode::Draw(const RenderContext& context) {
     for (auto it = meshes.begin(); it != meshes.end(); it++) {
         (*it).Draw(shader);
     }

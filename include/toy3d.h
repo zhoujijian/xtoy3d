@@ -1,51 +1,68 @@
 #ifndef _TOY3D_H_
 #define _TOY3D_H_
 
+#include <vector>
 #include <string>
 #include <iostream>
 #include <glad/glad.h>
 #include <stb_image.h>
+#include <glm/glm.hpp>
+
+#include <shader.h>
 
 using namespace std;
 
-unsigned int TextureFromFile(const char* path, const string& directory, bool gamma = false)
-{
-    string filename = string(path);
-    filename = directory + '/' + filename;
+#define MAX_BONE_INFLUENCE 4
 
-    unsigned int textureID;
-    glGenTextures(1, &textureID);
+struct Vertex {
+    // position
+    glm::vec3 Position;
+    // normal
+    glm::vec3 Normal;
+    // texCoords
+    glm::vec2 TexCoords;
+    // tangent
+    glm::vec3 Tangent;
+    // bitangent
+    glm::vec3 Bitangent;
+    //bone indexes which will influence this vertex
+    int m_BoneIDs[MAX_BONE_INFLUENCE];
+    //weights from each bone
+    float m_Weights[MAX_BONE_INFLUENCE];
+};
 
-    int width, height, nrComponents;
-    unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
-    if (data)
-    {
-        GLenum format;
-        if (nrComponents == 1)
-            format = GL_RED;
-        else if (nrComponents == 3)
-            format = GL_RGB;
-        else if (nrComponents == 4)
-            format = GL_RGBA;
+struct SimpleVertex {
+    glm::vec3 Position;
+    glm::vec3 Normal;
+    glm::vec2 TexCoords;
+};
 
-        glBindTexture(GL_TEXTURE_2D, textureID);
-        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
+struct Texture {
+    Texture() { id = 0; }
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    unsigned int id;
+    string type;
+    string path;
+};
 
-        stbi_image_free(data);
-    }
-    else
-    {
-        std::cout << "Texture failed to load at path: " << path << std::endl;
-        stbi_image_free(data);
-    }
+struct Material {
+    Material(const Shader& shader) : shader(shader), shininess(0) { }
 
-    return textureID;
-}
+    Shader shader;
+    float shininess;
+    Texture textureDiffuse;
+    Texture textureSpecular;
+};
+
+struct RenderContext {
+    glm::mat4 projection;
+    glm::mat4 view;
+
+    RenderContext(const glm::mat4& projection, const glm::mat4& view)
+        : projection(projection), view(view) {}
+};
+
+unsigned int TextureFromFile(const char* path, const string& directory, bool gamma = false);
+vector<SimpleVertex> CreateCubeVertices();
 
 #endif

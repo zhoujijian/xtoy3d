@@ -21,10 +21,7 @@
     <ClCompile Include="glad.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="include\learnopengl\stb_image_impl.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="node.cpp">
+    <ClCompile Include="toynode.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="model_node.cpp">
@@ -36,18 +33,18 @@
     <ClCompile Include="camera_node.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="toy3d.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image_impl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh_node.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\learnopengl\shader.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\learnopengl\mesh.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\learnopengl\camera.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\node.h">
+    <ClInclude Include="include\toynode.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="include\model_node.h">
@@ -62,12 +59,24 @@
     <ClInclude Include="include\toy3d.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="include\camera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mesh.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\shader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mesh_node.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\1.model_loading.fs">
+    <None Include="resources\model.fs">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="resources\1.model_loading.vs">
+    <None Include="resources\model.vs">
       <Filter>资源文件</Filter>
     </None>
     <None Include="resources\simple.fs">
