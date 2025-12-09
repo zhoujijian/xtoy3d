@@ -56,6 +56,7 @@ struct ToyLight {
 class LightNode : public ToyNode {
 public:
 	glm::vec3 color;
+	ToyLight light;
 
 public:
 	LightNode(ToyLight light);
@@ -63,8 +64,7 @@ public:
 
 	void Draw(const RenderContext& context) override;
 
-private:
-	ToyLight light;
+private:	
 	Shader* shader;
 	vector<unsigned int> indices;
 

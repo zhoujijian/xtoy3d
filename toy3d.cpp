@@ -40,6 +40,31 @@ unsigned int TextureFromFile(const char* path, const string& directory, bool gam
     return textureID;
 }
 
+vector<SimpleVertex> CreateSimpleVertices(float vertices[], int length) {
+    vector<SimpleVertex> vec;
+    for (int i = 0; i < length; i += 8) {
+        SimpleVertex vertex;
+        vertex.Position = glm::vec3(vertices[i], vertices[i + 1], vertices[i + 2]);
+        vertex.Normal = glm::vec3(vertices[i + 3], vertices[i + 4], vertices[i + 5]);
+        vertex.TexCoords = glm::vec2(vertices[i + 6], vertices[i + 7]);
+        vec.push_back(vertex);
+    }
+    return vec;
+}
+
+vector<SimpleVertex> CreatePlainVertices() {
+    float vertices[] = {
+        // positions          // normals           // texture coords
+        -0.5f,  0.0f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,
+         0.5f,  0.0f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  1.0f,
+         0.5f,  0.0f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.0f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+        -0.5f,  0.0f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  0.0f,
+        -0.5f,  0.0f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f
+    };
+    return CreateSimpleVertices(vertices, sizeof(vertices) / sizeof(vertices[0]));
+}
+
 vector<SimpleVertex> CreateCubeVertices() {
     float vertices[] = {
         // positions          // normals           // texture coords
@@ -85,16 +110,5 @@ vector<SimpleVertex> CreateCubeVertices() {
         -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  0.0f,
         -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f
     };
-
-    vector<SimpleVertex> vec;
-    int length = sizeof(vertices) / sizeof(vertices[0]);
-    for (int i = 0; i < length; i += 8) {
-        SimpleVertex vertex;
-        vertex.Position = glm::vec3(vertices[i], vertices[i + 1], vertices[i + 2]);
-        vertex.Normal = glm::vec3(vertices[i + 3], vertices[i + 4], vertices[i + 5]);
-        vertex.TexCoords = glm::vec2(vertices[i + 6], vertices[i + 7]);
-        vec.push_back(vertex);
-    }
-
-    return vec;
+    return CreateSimpleVertices(vertices, sizeof(vertices) / sizeof(vertices[0]));
 }

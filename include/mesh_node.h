@@ -13,7 +13,10 @@ public:
 	glm::vec3 color;
 
 public:
-	SimpleMeshNode(const vector<SimpleVertex>& vertices, const Material& material, const glm::vec3& color);
+	SimpleMeshNode(
+		const vector<SimpleVertex>& vertices,
+		const Material& material,
+		const glm::vec3& color = glm::vec3(1.0f, 1.0f, 1.0f));
 
 public:
 	void Draw(const RenderContext& context) override;

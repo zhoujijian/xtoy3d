@@ -38,34 +38,30 @@ bool dragging = false;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
-SimpleMeshNode* CreatePlainMesh(const Shader& shader, glm::vec3 color) {
+SimpleMeshNode* CreatePlaneMesh() {
+    Shader shader("resources/model.vs", "resources/model.fs");
+    vector<SimpleVertex> vertices = CreatePlainVertices();
     Material material(shader);
-
-	float x1 = -1.0f, x2 = 1.0f;
-	float y1 = -1.0f, y2 = 1.0f;
-	float z1 = -1.0f, z2 = 1.0f;
-	SimpleVertex vertex0;
-	SimpleVertex vertex1;
-	SimpleVertex vertex2;
-	SimpleVertex vertex3;
-	vertex0.Position = glm::vec3(x1, 0.0f, z1);
-	vertex1.Position = glm::vec3(x2, 0.0f, z1);
-	vertex2.Position = glm::vec3(x2, 0.0f, z2);
-	vertex3.Position = glm::vec3(x1, 0.0f, z2);
-    vector<SimpleVertex> vertices = { vertex0, vertex3, vertex1, vertex1, vertex3, vertex2 };
+    material.shininess = 16.0f;
+    material.textureDiffuse = TextureFromFile("diffuse.png", "resources/objects/box");
+    material.textureSpecular = TextureFromFile("specular.png", "resources/objects/box");
     
-	SimpleMeshNode* plain = new SimpleMeshNode(vertices, material, color);
+	SimpleMeshNode* plain = new SimpleMeshNode(vertices, material);
 	return plain;
 }
 
-SimpleMeshNode* CreateCubeMesh(const Shader& shader, glm::vec3 color) {
+SimpleMeshNode* CreateBoxMesh() {
+    Shader shader("resources/model.vs", "resources/model.fs");
     vector<SimpleVertex> vertices = CreateCubeVertices();
     Material material(shader);
-    SimpleMeshNode* cube = new SimpleMeshNode(vertices, material, color);
+    material.shininess = 16.0f;
+    material.textureDiffuse = TextureFromFile("diffuse.png", "resources/objects/box");
+    material.textureSpecular = TextureFromFile("specular.png", "resources/objects/box");
+    SimpleMeshNode* cube = new SimpleMeshNode(vertices, material);
     return cube;
 }
 
-ModelNode* CreateModelPlain(Shader& shader, glm::vec3 color) {
+ModelNode* CreatePlaneModel(Shader& shader, glm::vec3 color) {
     float x1 = -1.0f, x2 = 1.0f;
     float y1 = -1.0f, y2 = 1.0f;
     float z1 = -1.0f, z2 = 1.0f;
@@ -87,7 +83,7 @@ ModelNode* CreateModelPlain(Shader& shader, glm::vec3 color) {
     return plain;
 }
 
-ModelNode* CreateModelCube(Shader& shader, glm::vec3 color) {
+ModelNode* CreateCubeModel(Shader& shader, glm::vec3 color) {
     float x1 = -1.0f, x2 = 1.0f;
     float y1 = -1.0f, y2 = 1.0f;
     float z1 = -1.0f, z2 = 1.0f;
@@ -124,6 +120,61 @@ ModelNode* CreateModelBackpack() {
     backpack->SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
     backpack->SetRotation(glm::vec3(0.0f, 0.0f, 0.0f));
     return backpack;
+}
+
+void AddDirectionLight(ToyNode& root) {
+    ToyLight lightConfDir;
+    lightConfDir.type = LightType::Direction;
+    lightConfDir.dir.direction = glm::vec3(0.0f, 0.2f, 0.5f);
+    lightConfDir.dir.ambient = glm::vec3(0.2f, 0.2f, 0.2f);
+    lightConfDir.dir.diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
+    lightConfDir.dir.specular = glm::vec3(1.0f, 1.0f, 1.0f);
+
+    LightNode* lightNodeDir = new LightNode(lightConfDir);
+    lightNodeDir->color = glm::vec3(1.0f, 0.0f, 0.0f);
+    lightNodeDir->SetScale(glm::vec3(0.1f));
+    lightNodeDir->SetPosition(lightConfDir.dir.direction * glm::vec3(1.0));
+
+    root.AddChild(lightNodeDir);
+}
+
+void AddPointLight(ToyNode& root) {
+    ToyLight lightConfPoint;
+    lightConfPoint.type = LightType::Point;
+    lightConfPoint.point.ambient = glm::vec3(1.0f, 1.0f, 1.0f);
+    lightConfPoint.point.diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
+    lightConfPoint.point.specular = glm::vec3(2.0f, 2.0f, 2.0f);
+    lightConfPoint.point.constant = 1.0f;
+    lightConfPoint.point.linear = 0.22f;
+    lightConfPoint.point.quadratic = 0.20f;
+
+    LightNode* lightNodePoint = new LightNode(lightConfPoint);
+    lightNodePoint->color = glm::vec3(1.0f, 1.0f, 1.0f);
+    lightNodePoint->SetPosition(glm::vec3(1.0f, 2.0f, 1.0f));
+    lightNodePoint->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+
+    root.AddChild(lightNodePoint);
+}
+
+void AddSpotLight(ToyNode& root) {
+    ToyLight lightConfSpot;
+	lightConfSpot.type = LightType::Spot;
+    lightConfSpot.spot.direction = glm::vec3(0.0f, -1.0f, 0.0f);
+	lightConfSpot.spot.ambient = glm::vec3(1.0f, 1.0f, 1.0f);
+	lightConfSpot.spot.diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
+	lightConfSpot.spot.specular = glm::vec3(2.0f, 2.0f, 2.0f);
+	lightConfSpot.spot.constant = 1.0f;
+	lightConfSpot.spot.linear = 0.14f;
+	lightConfSpot.spot.quadratic = 0.07f;
+	lightConfSpot.spot.cutOff = glm::cos(glm::radians(12.5f));
+	lightConfSpot.spot.outerCutOff = glm::cos(glm::radians(25.0f));
+
+	LightNode* lightNodeSpot = new LightNode(lightConfSpot);
+	lightNodeSpot->color = glm::vec3(1.0f, 0.0f, 1.0f);
+	lightNodeSpot->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
+	lightNodeSpot->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+
+	root.AddChild(lightNodeSpot);
 }
 
 int main()
@@ -178,40 +229,18 @@ int main()
     // ModelNode* backpack = CreateModelBackpack();
     // root.AddChild(backpack);
 
-    ToyLight lightConfDir;
-    lightConfDir.type = LightType::Direction;
-    lightConfDir.dir.direction = glm::vec3(-1.0f, -1.0f, 0.5f);
-    lightConfDir.dir.ambient = glm::vec3(1.0f, 1.0f, 1.0f);
-    lightConfDir.dir.diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
-    lightConfDir.dir.specular = glm::vec3(1.0f, 1.0f, 1.0f);
-    // LightNode* lightNodeDir = new LightNode(lightConfDir);
-    // root.AddChild(lightNodeDir);
+    AddDirectionLight(root);
+    AddPointLight(root);
+    AddSpotLight(root);
 
-    ToyLight lightConfPoint;
-    lightConfPoint.type = LightType::Point;
-    lightConfPoint.point.ambient = glm::vec3(1.0f, 1.0f, 1.0f);
-    lightConfPoint.point.diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
-    lightConfPoint.point.specular = glm::vec3(1.0f, 1.0f, 1.0f);
-    lightConfPoint.point.constant = 1.0f;
-    lightConfPoint.point.linear = 0.7f;
-    lightConfPoint.point.quadratic = 1.8f;
-    LightNode* lightNodePoint = new LightNode(lightConfPoint);
-    lightNodePoint->color = glm::vec3(1.0f, 1.0f, 1.0f);
-    lightNodePoint->SetPosition(glm::vec3(1.0f, 2.0f, -1.0f));
-    lightNodePoint->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
-    root.AddChild(lightNodePoint);
+    SimpleMeshNode* plane = CreatePlaneMesh();
+    plane->SetScale(glm::vec3(8.0f, 1.0f, 8.0f));
+    root.AddChild(plane);
 
-    Shader shader("resources/simple.vs", "resources/simple.fs");
-    SimpleMeshNode* plain = CreatePlainMesh(shader, glm::vec3(1.0f, 1.0f, 0.0f));
-    root.AddChild(plain);
-
-    // ModelNode* plain = CreateModelPlain(shader, glm::vec3(0.5f, 0.5f, 0.5f));
-    // root.AddChild(plain);
-
-    SimpleMeshNode* cube = CreateCubeMesh(shader, glm::vec3(0.0f, 1.0f, 1.0f));
-    cube->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
-    cube->SetPosition(glm::vec3(0.0f, 1.0f, -1.0f));
-    root.AddChild(cube);
+    SimpleMeshNode* box = CreateBoxMesh();
+    box->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
+    box->SetPosition(glm::vec3(0.0f, 1.5f, -0.5f));
+    root.AddChild(box);
 
     // ModelNode* cube = CreateModelCube(shader, glm::vec3(0.0f, 1.0f, 1.0f));
     // cube->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
@@ -240,7 +269,7 @@ int main()
 
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
-        RenderContext context(projection, view);
+        RenderContext context(&root, projection, view, camera.Position);
         vector<ToyNode*> children = root.GetChildren();
 
         for (auto it = children.begin(); it != children.end(); ++it) {

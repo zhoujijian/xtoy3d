@@ -33,3 +33,15 @@ glm::mat4 ToyNode::GetTransform() const {
 
 	return matrix;
 }
+
+vector<ToyNode*> ToyNode::FindNodesByType(ToyNodeType::List type) {
+	vector<ToyNode*> result;
+	if (this->type == type) {
+		result.push_back(this);
+	}
+	for (auto it = children.begin(); it != children.end(); ++it) {
+		vector<ToyNode*> children = (*it)->FindNodesByType(type);
+		result.insert(result.end(), children.begin(), children.end());
+	}
+	return result;
+}

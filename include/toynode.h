@@ -9,6 +9,8 @@
 
 using namespace std;
 
+class ToyNode;
+
 struct ToyNodeType {
 	enum List {
 		Empty = 0,
@@ -17,6 +19,20 @@ struct ToyNodeType {
 		Mesh,
 		Camera
 	};
+};
+
+struct RenderContext {
+	ToyNode* root;
+	glm::mat4 projection;
+	glm::mat4 view;
+	glm::vec3 viewPosition;
+
+	RenderContext(
+		ToyNode* root,
+		const glm::mat4& projection,
+		const glm::mat4& view,
+		const glm::vec3& viewPosition)
+		: root(root), projection(projection), view(view), viewPosition(viewPosition) {}
 };
 
 class ToyNode {
@@ -33,6 +49,8 @@ public:
 	glm::mat4 GetTransform() const;
 	vector<ToyNode*> GetChildren() const { return children; }
 	ToyNodeType::List GetNodeType() const { return type; }
+
+	vector<ToyNode*> FindNodesByType(ToyNodeType::List type);
 
 public:
 	void AddChild(ToyNode* node);
