@@ -11,6 +11,7 @@ using namespace std;
 class SimpleMeshNode : public ToyNode {
 public:
 	glm::vec3 color;
+	Material material;
 
 public:
 	SimpleMeshNode(
@@ -21,10 +22,9 @@ public:
 public:
 	void Draw(const RenderContext& context) override;
 
-private:
+protected:
 	unsigned int VAO;
 	unsigned int VBO;
-	Material material;
 	vector<SimpleVertex> vertices;
 };
 

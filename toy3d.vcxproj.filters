@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="源文件\experiment">
+      <UniqueIdentifier>{1682c26b-9b6e-403f-bdde-96c46f658f9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -41,6 +44,15 @@
     </ClCompile>
     <ClCompile Include="mesh_node.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="experiment\multiple_lights.cpp">
+      <Filter>源文件\experiment</Filter>
+    </ClCompile>
+    <ClCompile Include="experiment\outline.cpp">
+      <Filter>源文件\experiment</Filter>
+    </ClCompile>
+    <ClCompile Include="experiment\tutorial.cpp">
+      <Filter>源文件\experiment</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +83,9 @@
     <ClInclude Include="include\mesh_node.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="include\learn\tutorial.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\model.fs">
@@ -79,10 +94,10 @@
     <None Include="resources\model.vs">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="resources\simple.fs">
+    <None Include="resources\setcolor.fs">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="resources\simple.vs">
+    <None Include="resources\settexture.fs">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

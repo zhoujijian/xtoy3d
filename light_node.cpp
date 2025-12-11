@@ -43,7 +43,7 @@ LightNode::LightNode(ToyLight light) : light(light), color(glm::vec3(1.0f, 1.0f,
 
     glBindVertexArray(0);
 
-    shader = new Shader("resources/simple.vs", "resources/simple.fs");
+    shader = new Shader("resources/simple.vs", "resources/setcolor.fs");
 }
 
 LightNode::~LightNode() {

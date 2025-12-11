@@ -136,6 +136,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="camera_node.cpp" />
+    <ClCompile Include="experiment\multiple_lights.cpp" />
+    <ClCompile Include="experiment\outline.cpp" />
+    <ClCompile Include="experiment\tutorial.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="light_node.cpp" />
     <ClCompile Include="main.cpp" />
@@ -148,6 +151,7 @@
   <ItemGroup>
     <ClInclude Include="include\camera.h" />
     <ClInclude Include="include\camera_node.h" />
+    <ClInclude Include="include\learn\tutorial.h" />
     <ClInclude Include="include\light_node.h" />
     <ClInclude Include="include\mesh.h" />
     <ClInclude Include="include\mesh_node.h" />
@@ -159,8 +163,8 @@
   <ItemGroup>
     <None Include="resources\model.fs" />
     <None Include="resources\model.vs" />
-    <None Include="resources\simple.fs" />
-    <None Include="resources\simple.vs" />
+    <None Include="resources\setcolor.fs" />
+    <None Include="resources\settexture.fs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
