@@ -7,6 +7,8 @@ void DrawScene(const RenderContext& context);
 void AddLightsObjects(ToyNode& root);
 void AddOutlineObjects(ToyNode& root);
 void DrawOutline(const RenderContext& context);
+unsigned int AddFramebuffer(int width, int height);
+void DrawFramebuffer(const RenderContext& context);
 
 class TextureMeshNode : public SimpleMeshNode {
 public:

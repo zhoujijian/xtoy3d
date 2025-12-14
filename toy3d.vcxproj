@@ -139,6 +139,7 @@
     <ClCompile Include="experiment\multiple_lights.cpp" />
     <ClCompile Include="experiment\outline.cpp" />
     <ClCompile Include="experiment\tutorial.cpp" />
+    <ClCompile Include="framebuffer.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="light_node.cpp" />
     <ClCompile Include="main.cpp" />
@@ -161,6 +162,8 @@
     <ClInclude Include="include\toy3d.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resources\framebuffer_quad.fs" />
+    <None Include="resources\framebuffer_quad.vs" />
     <None Include="resources\model.fs" />
     <None Include="resources\model.vs" />
     <None Include="resources\setcolor.fs" />

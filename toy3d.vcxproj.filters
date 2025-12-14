@@ -54,6 +54,9 @@
     <ClCompile Include="experiment\tutorial.cpp">
       <Filter>源文件\experiment</Filter>
     </ClCompile>
+    <ClCompile Include="framebuffer.cpp">
+      <Filter>源文件\experiment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\toynode.h">
@@ -98,6 +101,12 @@
       <Filter>资源文件</Filter>
     </None>
     <None Include="resources\settexture.fs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="resources\framebuffer_quad.vs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="resources\framebuffer_quad.fs">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

@@ -59,5 +59,7 @@ struct Material {
 unsigned int TextureFromFile(const char* path, const string& directory, bool gamma = false);
 vector<SimpleVertex> CreateCubeVertices();
 vector<SimpleVertex> CreatePlainVertices();
+vector<SimpleVertex> CreateFlatVertices();
+void CreateSimpleVertexArray(unsigned int& vao, unsigned int& vbo, const vector<SimpleVertex>& vertices);
 
 #endif

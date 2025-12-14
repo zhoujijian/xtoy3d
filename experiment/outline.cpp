@@ -1,9 +1,9 @@
 #include <learn/tutorial.h>
 
-OutlineMeshNode* box = NULL;
-TextureMeshNode* plane = NULL;
-Shader* shader = NULL;
-Shader* shaderOutline = NULL;
+static OutlineMeshNode* box = NULL;
+static TextureMeshNode* plane = NULL;
+static Shader* shader = NULL;
+static Shader* shaderOutline = NULL;
 
 OutlineMeshNode* CreateBoxMesh() {
     Material material(*shader);
@@ -43,6 +43,7 @@ void AddOutlineObjects(ToyNode& root) {
 }
 
 void DrawOutline(const RenderContext& context) {
+    glEnable(GL_DEPTH_TEST);
     glStencilMask(0x00);
     plane->Draw(context);
 

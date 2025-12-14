@@ -109,6 +109,16 @@ void DrawOutline(ToyNode& root) {
     root.AddChild(box);
 }
 
+void AddBoxMesh(ToyNode& root) {
+    vector<SimpleVertex> vertices = CreateCubeVertices();
+    Shader shader("resources/model.vs", "resources/settexture.fs");
+    Material material(shader);
+    material.textureDiffuse = TextureFromFile("diffuse.png", "resources/objects/box");
+    TextureMeshNode* box = new TextureMeshNode(vertices, material);
+    box->SetPosition(glm::vec3(0.0f, 1.0f, -0.5f));
+    root.AddChild(box);
+}
+
 int main()
 {
     // glfw: initialize and configure
@@ -158,7 +168,9 @@ int main()
 
     ToyNode root;
     // AddLightsObjects(root);
-    AddOutlineObjects(root);
+    // AddOutlineObjects(root);
+    AddBoxMesh(root);
+    unsigned int framebuffer = AddFramebuffer(SCR_WIDTH, SCR_HEIGHT);
 
     // ModelNode* backpack = CreateModelBackpack();
     // root.AddChild(backpack);
@@ -179,15 +191,21 @@ int main()
         processInput(window);
         processMouseDragging(window);
 
-        // render
-        glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+        // CAUTIOUS: must be called before glClear(clear frame buffer [color && depth && stencil])
+        glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
         RenderContext context(&root, projection, view, camera.Position);
-        // DrawScene(context);
-        DrawOutline(context);
+        DrawScene(context);
+        // DrawOutline(context);
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+        DrawFramebuffer(context);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
