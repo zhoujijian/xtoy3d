@@ -109,16 +109,6 @@ void DrawOutline(ToyNode& root) {
     root.AddChild(box);
 }
 
-void AddBoxMesh(ToyNode& root) {
-    vector<SimpleVertex> vertices = CreateCubeVertices();
-    Shader shader("resources/model.vs", "resources/settexture.fs");
-    Material material(shader);
-    material.textureDiffuse = TextureFromFile("diffuse.png", "resources/objects/box");
-    TextureMeshNode* box = new TextureMeshNode(vertices, material);
-    box->SetPosition(glm::vec3(0.0f, 1.0f, -0.5f));
-    root.AddChild(box);
-}
-
 int main()
 {
     // glfw: initialize and configure
@@ -158,9 +148,6 @@ int main()
         return -1;
     }
 
-    // tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
-    stbi_set_flip_vertically_on_load(true);
-
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
@@ -169,8 +156,13 @@ int main()
     ToyNode root;
     // AddLightsObjects(root);
     // AddOutlineObjects(root);
-    AddBoxMesh(root);
+    // AddBoxMesh(root);
+
+    AddSkyboxObjects(root);
+
+#ifdef DRAW_FRAMEBUFFER
     unsigned int framebuffer = AddFramebuffer(SCR_WIDTH, SCR_HEIGHT);
+#endif
 
     // ModelNode* backpack = CreateModelBackpack();
     // root.AddChild(backpack);
@@ -191,8 +183,10 @@ int main()
         processInput(window);
         processMouseDragging(window);
 
+#ifdef DRAW_FRAMEBUFFER
         // CAUTIOUS: must be called before glClear(clear frame buffer [color && depth && stencil])
         glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+#endif
 
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -202,10 +196,12 @@ int main()
         RenderContext context(&root, projection, view, camera.Position);
         DrawScene(context);
         // DrawOutline(context);
+        DrawSkybox(context);
 
+#ifdef DRAW_FRAMEBUFFER
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
         DrawFramebuffer(context);
+#endif
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------

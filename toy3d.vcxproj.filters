@@ -54,7 +54,10 @@
     <ClCompile Include="experiment\tutorial.cpp">
       <Filter>源文件\experiment</Filter>
     </ClCompile>
-    <ClCompile Include="framebuffer.cpp">
+    <ClCompile Include="experiment\skybox.cpp">
+      <Filter>源文件\experiment</Filter>
+    </ClCompile>
+    <ClCompile Include="experiment\framebuffer.cpp">
       <Filter>源文件\experiment</Filter>
     </ClCompile>
   </ItemGroup>
@@ -107,6 +110,12 @@
       <Filter>资源文件</Filter>
     </None>
     <None Include="resources\framebuffer_quad.fs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="resources\skybox.fs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="resources\skybox.vs">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

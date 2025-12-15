@@ -23,3 +23,13 @@ void DrawScene(const RenderContext& context) {
         (*it)->Draw(context);
     }
 }
+
+void AddBoxMesh(ToyNode& root) {
+	vector<SimpleVertex> vertices = CreateCubeVertices();
+	Shader shader("resources/model.vs", "resources/settexture.fs");
+	Material material(shader);
+	material.textureDiffuse = TextureFromFile("diffuse.png", "resources/objects/box");
+	TextureMeshNode* box = new TextureMeshNode(vertices, material);
+	box->SetPosition(glm::vec3(0.0f, 1.0f, -0.5f));
+	root.AddChild(box);
+}
