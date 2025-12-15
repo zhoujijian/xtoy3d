@@ -167,10 +167,13 @@
     <None Include="resources\framebuffer_quad.vs" />
     <None Include="resources\model.fs" />
     <None Include="resources\model.vs" />
+    <None Include="resources\skybox_reflect.fs" />
+    <None Include="resources\skybox_reflect.vs" />
     <None Include="resources\setcolor.fs" />
     <None Include="resources\settexture.fs" />
     <None Include="resources\skybox.fs" />
     <None Include="resources\skybox.vs" />
+    <None Include="resources\skybox_refract.fs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

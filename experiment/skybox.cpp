@@ -5,6 +5,39 @@ static unsigned int skyboxVAO = 0;
 static unsigned int skyboxCubemapTexture = 0;
 static Shader* skyboxShader = NULL;
 
+static unsigned int reflectVAO = 0;
+static unsigned int reflectVBO = 0;
+vector<SimpleVertex> reflectVertices;
+static Shader* reflectRefractShader = NULL;
+
+void AddBox(ToyNode& root, const char* path_vs, const char* path_fs) {
+    reflectVertices = CreateCubeVertices();
+    glGenVertexArrays(1, &reflectVAO);
+    glGenBuffers(1, &reflectVBO);
+
+    glBindVertexArray(reflectVAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, reflectVBO);
+    glBufferData(GL_ARRAY_BUFFER, reflectVertices.size() * sizeof(SimpleVertex), &reflectVertices[0], GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(SimpleVertex), (void*)0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(SimpleVertex), (void*)offsetof(SimpleVertex, Normal));
+
+    glBindVertexArray(0);
+
+    reflectRefractShader = new Shader(path_vs, path_fs);
+}
+
+void AddReflectBox(ToyNode& root) {
+    AddBox(root, "resources/skybox_reflect.vs", "resources/skybox_reflect.fs");
+}
+
+void AddRefractBox(ToyNode& root) {
+    AddBox(root, "resources/skybox_reflect.vs", "resources/skybox_refract.fs");
+}
+
 static float skyboxVertices[] = {
     // positions          
     -1.0f,  1.0f, -1.0f,
@@ -102,7 +135,6 @@ void AddSkyboxObjects(ToyNode& root) {
     };
     skyboxCubemapTexture = LoadCubemap(faces);
 
-
     glGenVertexArrays(1, &skyboxVAO);
     glGenBuffers(1, &skyboxVBO);
     glBindVertexArray(skyboxVAO);
@@ -113,10 +145,25 @@ void AddSkyboxObjects(ToyNode& root) {
 
     skyboxShader = new Shader("resources/skybox.vs", "resources/skybox.fs");
 
-    AddBoxMesh(root);
+    // AddReflectBox(root);
+    AddRefractBox(root);
 }
 
 void DrawSkybox(const RenderContext& context) {
+    reflectRefractShader->use();
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxCubemapTexture);
+    glm::mat4 model = glm::mat4(1.0f);
+    reflectRefractShader->setMat4("model", model);
+    reflectRefractShader->setMat4("view", context.view);
+    reflectRefractShader->setMat4("projection", context.projection);
+    reflectRefractShader->setVec3("cameraPosition", context.viewPosition);
+
+    glBindVertexArray(reflectVAO);
+    glDrawArrays(GL_TRIANGLES, 0, static_cast<unsigned int>(reflectVertices.size()));
+    glBindVertexArray(0);
+
     // change depth function so depth test passes when values are equal to depth buffer's content
     glDepthFunc(GL_LEQUAL);
 

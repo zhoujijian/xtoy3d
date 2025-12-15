@@ -118,5 +118,14 @@
     <None Include="resources\skybox.vs">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="resources\skybox_reflect.fs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="resources\skybox_reflect.vs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="resources\skybox_refract.fs">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>
