@@ -17,6 +17,9 @@ void DrawSkybox(const RenderContext& context);
 
 void AddBoxMesh(ToyNode& root);
 
+void AddGeometryObjects(ToyNode& root);
+void DrawGeometry(const RenderContext& context);
+
 class TextureMeshNode : public SimpleMeshNode {
 public:
 	TextureMeshNode(

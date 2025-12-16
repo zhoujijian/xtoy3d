@@ -157,8 +157,8 @@ int main()
     // AddLightsObjects(root);
     // AddOutlineObjects(root);
     // AddBoxMesh(root);
-
-    AddSkyboxObjects(root);
+    // AddSkyboxObjects(root);
+    AddGeometryObjects(root);
 
 #ifdef DRAW_FRAMEBUFFER
     unsigned int framebuffer = AddFramebuffer(SCR_WIDTH, SCR_HEIGHT);
@@ -196,7 +196,8 @@ int main()
         RenderContext context(&root, projection, view, camera.Position);
         DrawScene(context);
         // DrawOutline(context);
-        DrawSkybox(context);
+        // DrawSkybox(context);
+        DrawGeometry(context);
 
 #ifdef DRAW_FRAMEBUFFER
         glBindFramebuffer(GL_FRAMEBUFFER, 0);

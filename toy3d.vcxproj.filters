@@ -60,6 +60,9 @@
     <ClCompile Include="experiment\framebuffer.cpp">
       <Filter>源文件\experiment</Filter>
     </ClCompile>
+    <ClCompile Include="geometry.cpp">
+      <Filter>源文件\experiment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\toynode.h">
@@ -125,6 +128,21 @@
       <Filter>资源文件</Filter>
     </None>
     <None Include="resources\skybox_refract.fs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="resources\geometry.fs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="resources\geometry.vs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="resources\geometry.gs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="resources\geometry_explode.gs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="resources\geometry_explode.vs">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>
