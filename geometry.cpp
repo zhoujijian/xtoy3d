@@ -5,13 +5,15 @@ static unsigned int houseVAO = 0;
 static unsigned int houseVBO = 0;
 static Shader* shaderHouse = NULL;
 
+static vector<SimpleVertex> boxVertices;
 static unsigned int boxVAO = 0;
 static unsigned int boxVBO = 0;
 static unsigned int boxTexture = 0;
 static Shader* shaderBox = NULL;
-static vector<SimpleVertex> boxVertices;
+static Shader* shaderBoxNormal = NULL;
+static glm::vec3 normalColor = glm::vec3(0.0f, 1.0f, 0.0f);
 
-void AddBox(const char* pathVS, const char* pathFS, const char* pathGS) {
+void AddBox(const char* pathVS, const char* pathFS, const char* pathGS = nullptr) {
     boxVertices = CreateCubeVertices();
     boxTexture = TextureFromFile("diffuse.png", "resources/objects/box");
     shaderBox = new Shader(pathVS, pathFS, pathGS);
@@ -57,6 +59,39 @@ void DrawExplode(const RenderContext& context) {
 	glBindVertexArray(0);
 }
 
+void AddNormal() {
+    AddBox("resources/model.vs", "resources/settexture.fs");
+    shaderBoxNormal = new Shader("resources/geometry_normal.vs", "resources/setcolor.fs", "resources/geometry_normal.gs");
+}
+
+void DrawNormal(const RenderContext& context) {
+    glUseProgram(shaderBox->ID);
+
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    glUniformMatrix4fv(glGetUniformLocation(shaderBox->ID, "projection"), 1, GL_FALSE, &context.projection[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(shaderBox->ID, "view"), 1, GL_FALSE, &context.view[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(shaderBox->ID, "model"), 1, GL_FALSE, &model[0][0]);
+
+    glActiveTexture(GL_TEXTURE0);
+    glUniform1i(glGetUniformLocation(shaderBox->ID, "texture1"), 0);
+    glBindTexture(GL_TEXTURE_2D, boxTexture);
+
+    glBindVertexArray(boxVAO);
+    glDrawArrays(GL_TRIANGLES, 0, static_cast<unsigned int>(boxVertices.size()));
+    glBindVertexArray(0);
+
+    glUseProgram(shaderBoxNormal->ID);
+    glUniformMatrix4fv(glGetUniformLocation(shaderBoxNormal->ID, "projection"), 1, GL_FALSE, &context.projection[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(shaderBoxNormal->ID, "view"), 1, GL_FALSE, &context.view[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(shaderBoxNormal->ID, "model"), 1, GL_FALSE, &model[0][0]);
+    glUniform3fv(glGetUniformLocation(shaderBoxNormal->ID, "color"), 1, &normalColor[0]);
+    glBindVertexArray(boxVAO);
+    glDrawArrays(GL_TRIANGLES, 0, static_cast<unsigned int>(boxVertices.size()));
+    glBindVertexArray(0);
+}
+
 void AddHouse() {
     // positions(vec2) | color(vec3)
     float points[] = {
@@ -90,10 +125,12 @@ void DrawHouse(const RenderContext& context) {
 
 void AddGeometryObjects(ToyNode& root) {
     // AddHouse();
-    AddExplode();
+    // AddExplode();
+    AddNormal();
 }
 
 void DrawGeometry(const RenderContext& context) {
     // DrawHouse(context);
-    DrawExplode(context);
+    // DrawExplode(context);
+    DrawNormal(context);
 }

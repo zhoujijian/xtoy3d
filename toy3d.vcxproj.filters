@@ -145,5 +145,11 @@
     <None Include="resources\geometry_explode.vs">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="resources\geometry_normal.gs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="resources\geometry_normal.vs">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>
