@@ -63,6 +63,9 @@
     <ClCompile Include="geometry.cpp">
       <Filter>源文件\experiment</Filter>
     </ClCompile>
+    <ClCompile Include="instance.cpp">
+      <Filter>源文件\experiment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\toynode.h">
@@ -149,6 +152,15 @@
       <Filter>资源文件</Filter>
     </None>
     <None Include="resources\geometry_normal.vs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="resources\planet.fs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="resources\planet.vs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="resources\asteroid.vs">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

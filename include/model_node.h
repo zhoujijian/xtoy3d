@@ -16,6 +16,8 @@ using namespace std;
 class ModelNode : public ToyNode {
 public:
     Shader shader;
+    vector<Mesh> meshes;
+    vector<Texture> texturesLoaded;
 
 public:
     ModelNode(Shader& shader, vector<Mesh>& meshes);
@@ -31,8 +33,6 @@ private:
     vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName);
 
 private:
-    vector<Texture> texturesLoaded;
-    vector<Mesh> meshes;
     string directory;
     bool gammaCorrection;
 };

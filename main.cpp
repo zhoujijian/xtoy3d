@@ -54,7 +54,6 @@ ModelNode* CreatePlaneModel(Shader& shader, glm::vec3 color) {
     vector<Vertex> vertices = { vertex0, vertex1, vertex2, vertex3 };
     vector<unsigned int> indices = { 0, 1, 2, 2, 3, 0 };
     Mesh mesh(vertices, indices, {});
-    mesh.color = color;
     vector<Mesh> meshes;
     meshes.push_back(mesh);
     ModelNode* plain = new ModelNode(shader, meshes);
@@ -84,7 +83,6 @@ ModelNode* CreateCubeModel(Shader& shader, glm::vec3 color) {
         5, 1, 4, 4, 1, 0  // bottom
     };
     Mesh mesh(vertices, indices, {});
-    mesh.color = color;
     vector<Mesh> meshes;
     meshes.push_back(mesh);
     ModelNode* plain = new ModelNode(shader, meshes);
@@ -158,7 +156,8 @@ int main()
     // AddOutlineObjects(root);
     // AddBoxMesh(root);
     // AddSkyboxObjects(root);
-    AddGeometryObjects(root);
+    // AddGeometryObjects(root);
+    AddInstanceObjects(root);
 
 #ifdef DRAW_FRAMEBUFFER
     unsigned int framebuffer = AddFramebuffer(SCR_WIDTH, SCR_HEIGHT);
@@ -197,7 +196,8 @@ int main()
         DrawScene(context);
         // DrawOutline(context);
         // DrawSkybox(context);
-        DrawGeometry(context);
+        // DrawGeometry(context);
+        DrawInstance(context);
 
 #ifdef DRAW_FRAMEBUFFER
         glBindFramebuffer(GL_FRAMEBUFFER, 0);

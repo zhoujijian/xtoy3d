@@ -15,8 +15,6 @@ using namespace std;
 
 class Mesh {
 public:
-    glm::vec3 color;
-
     // mesh Data
     vector<Vertex>       vertices;
     vector<unsigned int> indices;
@@ -62,8 +60,6 @@ public:
             // and finally bind the texture
             glBindTexture(GL_TEXTURE_2D, textures[i].id);
         }
-
-        glUniform3fv(glGetUniformLocation(shader.ID, "color"), 1, &color[0]);
 
         // draw mesh
         glBindVertexArray(VAO);
