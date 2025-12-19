@@ -23,6 +23,12 @@ void DrawGeometry(const RenderContext& context);
 void AddInstanceObjects(ToyNode& root);
 void DrawInstance(const RenderContext& context);
 
+void AddShadowObjects(ToyNode& root);
+void DrawShadow(const RenderContext& context);
+
+const unsigned int SCR_WIDTH = 800;
+const unsigned int SCR_HEIGHT = 600;
+
 class TextureMeshNode : public SimpleMeshNode {
 public:
 	TextureMeshNode(
@@ -44,6 +50,21 @@ public:
 
 public:
 	void Draw(const RenderContext& context) override;
+};
+
+class ShadowMeshNode : public SimpleMeshNode {
+public:
+	ShadowMeshNode(
+		const vector<SimpleVertex>& vertices,
+		const Material& material) : SimpleMeshNode(vertices, material) { }
+
+public:
+	void Draw(const RenderContext& context) override;
+
+private:
+	void DrawSimpleTexture(const RenderContext& context);
+	void DrawShadowDepthTexture(const RenderContext& context);
+	void DrawShadowScene(const RenderContext& context);
 };
 
 #endif

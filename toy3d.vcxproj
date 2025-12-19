@@ -137,13 +137,14 @@
   <ItemGroup>
     <ClCompile Include="camera_node.cpp" />
     <ClCompile Include="experiment\framebuffer.cpp" />
+    <ClCompile Include="experiment\instance.cpp" />
     <ClCompile Include="experiment\multiple_lights.cpp" />
     <ClCompile Include="experiment\outline.cpp" />
+    <ClCompile Include="experiment\shadow.cpp" />
     <ClCompile Include="experiment\skybox.cpp" />
     <ClCompile Include="experiment\tutorial.cpp" />
     <ClCompile Include="geometry.cpp" />
     <ClCompile Include="glad.c" />
-    <ClCompile Include="instance.cpp" />
     <ClCompile Include="light_node.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mesh_node.cpp" />
@@ -165,27 +166,34 @@
     <ClInclude Include="include\toy3d.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\asteroid.vs" />
     <None Include="resources\framebuffer_quad.fs" />
     <None Include="resources\framebuffer_quad.vs" />
-    <None Include="resources\geometry.fs" />
-    <None Include="resources\geometry.gs" />
-    <None Include="resources\geometry.vs" />
-    <None Include="resources\geometry_explode.gs" />
-    <None Include="resources\geometry_explode.vs" />
-    <None Include="resources\geometry_normal.gs" />
-    <None Include="resources\geometry_normal.vs" />
     <None Include="resources\model.fs" />
     <None Include="resources\model.vs" />
-    <None Include="resources\planet.fs" />
-    <None Include="resources\planet.vs" />
-    <None Include="resources\skybox_reflect.fs" />
-    <None Include="resources\skybox_reflect.vs" />
+    <None Include="resources\shaders\geometry\geometry.fs" />
+    <None Include="resources\shaders\geometry\geometry.gs" />
+    <None Include="resources\shaders\geometry\geometry.vs" />
+    <None Include="resources\shaders\geometry\geometry_explode.gs" />
+    <None Include="resources\shaders\geometry\geometry_explode.vs" />
+    <None Include="resources\shaders\geometry\geometry_normal.gs" />
+    <None Include="resources\shaders\geometry\geometry_normal.vs" />
+    <None Include="resources\shaders\instance\asteroid.fs" />
+    <None Include="resources\shaders\instance\asteroid.vs" />
+    <None Include="resources\shaders\instance\planet.fs" />
+    <None Include="resources\shaders\instance\planet.vs" />
+    <None Include="resources\shaders\shadow\framebuffer_quad.fs" />
+    <None Include="resources\shaders\shadow\shadow.fs" />
+    <None Include="resources\shaders\shadow\shadow.vs" />
+    <None Include="resources\shaders\shadow\shadow_depth.fs" />
+    <None Include="resources\shaders\shadow\shadow_depth.vs" />
+    <None Include="resources\shaders\skybox\skybox.fs" />
+    <None Include="resources\shaders\skybox\skybox.vs" />
+    <None Include="resources\shaders\skybox\skybox_reflect.fs" />
+    <None Include="resources\shaders\skybox\skybox_reflect.vs" />
+    <None Include="resources\shaders\skybox\skybox_refract.fs" />
+    <None Include="resources\simple.vs" />
     <None Include="resources\setcolor.fs" />
     <None Include="resources\settexture.fs" />
-    <None Include="resources\skybox.fs" />
-    <None Include="resources\skybox.vs" />
-    <None Include="resources\skybox_refract.fs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -16,6 +16,18 @@
     <Filter Include="源文件\experiment">
       <UniqueIdentifier>{1682c26b-9b6e-403f-bdde-96c46f658f9d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件\geometry">
+      <UniqueIdentifier>{49d3c1bc-6c42-43c4-b375-22579199ce5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\skybox">
+      <UniqueIdentifier>{5211fe58-7a7c-4c31-84b7-f87df37662b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\instance">
+      <UniqueIdentifier>{40c34d88-0430-465d-99f5-eaba15790fc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\shadow">
+      <UniqueIdentifier>{f8a539fe-e6eb-45ee-b7e3-b24c92170d51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -63,7 +75,10 @@
     <ClCompile Include="geometry.cpp">
       <Filter>源文件\experiment</Filter>
     </ClCompile>
-    <ClCompile Include="instance.cpp">
+    <ClCompile Include="experiment\shadow.cpp">
+      <Filter>源文件\experiment</Filter>
+    </ClCompile>
+    <ClCompile Include="experiment\instance.cpp">
       <Filter>源文件\experiment</Filter>
     </ClCompile>
   </ItemGroup>
@@ -118,50 +133,71 @@
     <None Include="resources\framebuffer_quad.fs">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="resources\skybox.fs">
+    <None Include="resources\simple.vs">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="resources\skybox.vs">
-      <Filter>资源文件</Filter>
+    <None Include="resources\shaders\geometry\geometry.fs">
+      <Filter>资源文件\geometry</Filter>
     </None>
-    <None Include="resources\skybox_reflect.fs">
-      <Filter>资源文件</Filter>
+    <None Include="resources\shaders\geometry\geometry.gs">
+      <Filter>资源文件\geometry</Filter>
     </None>
-    <None Include="resources\skybox_reflect.vs">
-      <Filter>资源文件</Filter>
+    <None Include="resources\shaders\geometry\geometry.vs">
+      <Filter>资源文件\geometry</Filter>
     </None>
-    <None Include="resources\skybox_refract.fs">
-      <Filter>资源文件</Filter>
+    <None Include="resources\shaders\geometry\geometry_explode.gs">
+      <Filter>资源文件\geometry</Filter>
     </None>
-    <None Include="resources\geometry.fs">
-      <Filter>资源文件</Filter>
+    <None Include="resources\shaders\geometry\geometry_explode.vs">
+      <Filter>资源文件\geometry</Filter>
     </None>
-    <None Include="resources\geometry.vs">
-      <Filter>资源文件</Filter>
+    <None Include="resources\shaders\geometry\geometry_normal.gs">
+      <Filter>资源文件\geometry</Filter>
     </None>
-    <None Include="resources\geometry.gs">
-      <Filter>资源文件</Filter>
+    <None Include="resources\shaders\geometry\geometry_normal.vs">
+      <Filter>资源文件\geometry</Filter>
     </None>
-    <None Include="resources\geometry_explode.gs">
-      <Filter>资源文件</Filter>
+    <None Include="resources\shaders\skybox\skybox.fs">
+      <Filter>资源文件\skybox</Filter>
     </None>
-    <None Include="resources\geometry_explode.vs">
-      <Filter>资源文件</Filter>
+    <None Include="resources\shaders\skybox\skybox.vs">
+      <Filter>资源文件\skybox</Filter>
     </None>
-    <None Include="resources\geometry_normal.gs">
-      <Filter>资源文件</Filter>
+    <None Include="resources\shaders\skybox\skybox_reflect.fs">
+      <Filter>资源文件\skybox</Filter>
     </None>
-    <None Include="resources\geometry_normal.vs">
-      <Filter>资源文件</Filter>
+    <None Include="resources\shaders\skybox\skybox_reflect.vs">
+      <Filter>资源文件\skybox</Filter>
     </None>
-    <None Include="resources\planet.fs">
-      <Filter>资源文件</Filter>
+    <None Include="resources\shaders\skybox\skybox_refract.fs">
+      <Filter>资源文件\skybox</Filter>
     </None>
-    <None Include="resources\planet.vs">
-      <Filter>资源文件</Filter>
+    <None Include="resources\shaders\instance\asteroid.fs">
+      <Filter>资源文件\instance</Filter>
     </None>
-    <None Include="resources\asteroid.vs">
-      <Filter>资源文件</Filter>
+    <None Include="resources\shaders\instance\asteroid.vs">
+      <Filter>资源文件\instance</Filter>
+    </None>
+    <None Include="resources\shaders\instance\planet.fs">
+      <Filter>资源文件\instance</Filter>
+    </None>
+    <None Include="resources\shaders\instance\planet.vs">
+      <Filter>资源文件\instance</Filter>
+    </None>
+    <None Include="resources\shaders\shadow\shadow.fs">
+      <Filter>资源文件\shadow</Filter>
+    </None>
+    <None Include="resources\shaders\shadow\shadow.vs">
+      <Filter>资源文件\shadow</Filter>
+    </None>
+    <None Include="resources\shaders\shadow\shadow_depth.fs">
+      <Filter>资源文件\shadow</Filter>
+    </None>
+    <None Include="resources\shaders\shadow\shadow_depth.vs">
+      <Filter>资源文件\shadow</Filter>
+    </None>
+    <None Include="resources\shaders\shadow\framebuffer_quad.fs">
+      <Filter>资源文件\shadow</Filter>
     </None>
   </ItemGroup>
 </Project>

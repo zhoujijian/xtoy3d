@@ -69,7 +69,9 @@ LightNode::~LightNode() {
 }
 
 void LightNode::Draw(const RenderContext& context) {
+#ifdef DEBUG_DRAW_LIGHT_NODE
     glUseProgram(shader->ID);
+
     glm::mat4 model = GetTransform();
     glUniformMatrix4fv(glGetUniformLocation(shader->ID, "projection"), 1, GL_FALSE, &context.projection[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(shader->ID, "view"), 1, GL_FALSE, &context.view[0][0]);
@@ -79,4 +81,7 @@ void LightNode::Draw(const RenderContext& context) {
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+
+    glUseProgram(0);
+#endif
 }

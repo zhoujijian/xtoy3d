@@ -1,7 +1,7 @@
 #include <learn/tutorial.h>
 #include <light_node.h>
 
-SimpleMeshNode* CreatePlaneMesh(const Shader& shader) {
+static SimpleMeshNode* CreatePlaneMesh(const Shader& shader) {
     vector<SimpleVertex> vertices = CreatePlainVertices();
     Material material(shader);
     material.shininess = 16.0f;
@@ -12,7 +12,7 @@ SimpleMeshNode* CreatePlaneMesh(const Shader& shader) {
     return plain;
 }
 
-SimpleMeshNode* CreateBoxMesh(const Shader& shader) {
+static SimpleMeshNode* CreateBoxMesh(const Shader& shader) {
     vector<SimpleVertex> vertices = CreateCubeVertices();
     Material material(shader);
     material.shininess = 16.0f;
@@ -22,7 +22,7 @@ SimpleMeshNode* CreateBoxMesh(const Shader& shader) {
     return cube;
 }
 
-void AddDirectionLight(ToyNode& root) {
+static void AddDirectionLight(ToyNode& root) {
     ToyLight lightConfDir;
     lightConfDir.type = LightType::Direction;
     lightConfDir.dir.direction = glm::vec3(0.0f, 0.2f, 0.5f);
@@ -38,7 +38,7 @@ void AddDirectionLight(ToyNode& root) {
     root.AddChild(lightNodeDir);
 }
 
-void AddPointLight(ToyNode& root) {
+static void AddPointLight(ToyNode& root) {
     ToyLight lightConfPoint;
     lightConfPoint.type = LightType::Point;
     lightConfPoint.point.ambient = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -56,7 +56,7 @@ void AddPointLight(ToyNode& root) {
     root.AddChild(lightNodePoint);
 }
 
-void AddSpotLight(ToyNode& root) {
+static void AddSpotLight(ToyNode& root) {
     ToyLight lightConfSpot;
     lightConfSpot.type = LightType::Spot;
     lightConfSpot.spot.direction = glm::vec3(0.0f, -1.0f, 0.0f);

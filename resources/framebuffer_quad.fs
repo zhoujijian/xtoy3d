@@ -9,15 +9,15 @@ const float offset = 1.0 / 300.0;
 
 vec4 convolution_matrix(float kernel[9]) {
     vec2 offsets[9] = vec2[](
-        vec2(-offset,  offset), // ×óÉÏ
-        vec2( 0.0f,    offset), // ÕıÉÏ
-        vec2( offset,  offset), // ÓÒÉÏ
-        vec2(-offset,  0.0f),   // ×ó
-        vec2( 0.0f,    0.0f),   // ÖĞ
-        vec2( offset,  0.0f),   // ÓÒ
-        vec2(-offset, -offset), // ×óÏÂ
-        vec2( 0.0f,   -offset), // ÕıÏÂ
-        vec2( offset, -offset)  // ÓÒÏÂ
+        vec2(-offset,  offset), // å·¦ä¸Š
+        vec2( 0.0f,    offset), // æ­£ä¸Š
+        vec2( offset,  offset), // å³ä¸Š
+        vec2(-offset,  0.0f),   // å·¦
+        vec2( 0.0f,    0.0f),   // ä¸­
+        vec2( offset,  0.0f),   // å³
+        vec2(-offset, -offset), // å·¦ä¸‹
+        vec2( 0.0f,   -offset), // æ­£ä¸‹
+        vec2( offset, -offset)  // å³ä¸‹
     );
 
     vec3 sampleTex[9];
@@ -74,4 +74,5 @@ void main() {
     // FragColor = convolution();
     // FragColor = blur();
     FragColor = edge_dectection();
+    // FragColor = texture(texture1, TexCoords);
 }

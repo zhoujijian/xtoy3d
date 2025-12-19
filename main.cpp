@@ -24,10 +24,6 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
 void processMouseDragging(GLFWwindow* window);
 
-// settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
-
 // camera
 Camera camera(glm::vec3(0.0f, 1.0f, 3.0f));
 float lastX = SCR_WIDTH / 2.0f;
@@ -90,7 +86,7 @@ ModelNode* CreateCubeModel(Shader& shader, glm::vec3 color) {
 }
 
 ModelNode* CreateModelBackpack() {
-    Shader ourShader("resources/1.model_loading.vs", "resources/1.model_loading.fs");
+    Shader ourShader("resources/model.vs", "resources/planet.fs");
     ModelNode* backpack = new ModelNode(ourShader, "resources/objects/backpack/backpack.obj");
     backpack->SetPosition(glm::vec3(0.0f, 0.0f, -5.0f));
     backpack->SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
@@ -157,7 +153,8 @@ int main()
     // AddBoxMesh(root);
     // AddSkyboxObjects(root);
     // AddGeometryObjects(root);
-    AddInstanceObjects(root);
+    // AddInstanceObjects(root);
+    AddShadowObjects(root);
 
 #ifdef DRAW_FRAMEBUFFER
     unsigned int framebuffer = AddFramebuffer(SCR_WIDTH, SCR_HEIGHT);
@@ -193,11 +190,12 @@ int main()
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
         RenderContext context(&root, projection, view, camera.Position);
-        DrawScene(context);
+        // DrawScene(context);
         // DrawOutline(context);
         // DrawSkybox(context);
         // DrawGeometry(context);
-        DrawInstance(context);
+        // DrawInstance(context);
+        DrawShadow(context);
 
 #ifdef DRAW_FRAMEBUFFER
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
