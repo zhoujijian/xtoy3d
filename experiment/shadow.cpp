@@ -9,7 +9,7 @@ static void CreatePlaneMesh(ToyNode& root, const Shader& shader) {
     material.textureSpecular = TextureFromFile("specular.png", "resources/objects/box");
 
 	ShadowMeshNode* plane = new ShadowMeshNode(vertices, material);
-    plane->SetScale(glm::vec3(8.0f, 1.0f, 8.0f));
+    plane->SetScale(glm::vec3(32.0f, 1.0f, 32.0f));
     root.AddChild(plane);
 }
 
@@ -22,7 +22,7 @@ static void CreateBoxMesh(ToyNode& root, const Shader& shader) {
 
 	ShadowMeshNode* box = new ShadowMeshNode(vertices, material);
     box->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
-    box->SetPosition(glm::vec3(0.0f, 1.5f, -0.5f));
+    box->SetPosition(glm::vec3(0.0f, 0.25f, 0.0f));
     root.AddChild(box);
 }
 
@@ -41,8 +41,10 @@ static unsigned int AddShadowDepthFramebuffer(int width, int height) {
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glGenFramebuffers(1, &framebuffer);
@@ -99,7 +101,9 @@ static void DrawFramebuffer(const RenderContext& context) {
 	// glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 	glClear(GL_DEPTH_BUFFER_BIT);
+	glCullFace(GL_FRONT);
 	DrawScene(context);
+	glCullFace(GL_BACK);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
