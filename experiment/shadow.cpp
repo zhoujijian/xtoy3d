@@ -101,9 +101,9 @@ static void DrawFramebuffer(const RenderContext& context) {
 	// glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 	glClear(GL_DEPTH_BUFFER_BIT);
-	glCullFace(GL_FRONT);
+	// glCullFace(GL_FRONT);
 	DrawScene(context);
-	glCullFace(GL_BACK);
+	// glCullFace(GL_BACK);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
